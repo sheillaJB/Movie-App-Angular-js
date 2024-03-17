@@ -10,12 +10,17 @@ export class LoginService {
   login(email:string, password:string){
     // here we will call our backend api but as we are not making a real prodcut we will just 
     // login user here
-    // suppose we have sucessfully logged in and got a token from the server
-    // we will store the token in localstorage
-    localStorage.setItem("token",Math.random()+"");
+    // suppose we have successfully logged in and got a token from the server
+    // we will store the token in localstorage if available
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem("token", Math.random() + "");
+    } else {
+      console.error("localStorage is not available. Unable to store token.");
+    }
   }
+
   get isLoggedIn() {
-    if (localStorage.getItem('token')) {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
       return true;
     }
     return false;
